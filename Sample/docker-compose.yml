@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+
+  db:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=sqlServer#2017
+    ports:
+        - "14430:1433"
+
+  sampleapp:
+    image: ${DOCKER_REGISTRY-}sampleapp
+    build:
+      context: .
+      dockerfile: SampleApp/Dockerfile
+    depends_on:
+      - db
